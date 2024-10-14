@@ -54,6 +54,6 @@ try:
     else:
         review_text = f"No correct answer from OpenAI!\n{response.text}"
 except Exception as e:
-    review_text = f"OpenAI failed to generate a review: {e}"
+    review_text = f"OpenAI failed to generate a review: {e} {prompt}"
 
 print(f"{review_text}")
