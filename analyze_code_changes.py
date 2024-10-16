@@ -32,7 +32,14 @@ max_length = int(os.environ["MAX_LENGTH"])
 code = sys.stdin.read()
 header = (f"Commit title is '{commit_title}'\n"
           f"and commit message is '{commit_message}'\n")
-prompt = os.environ["PROMPT"] + "\nCode of commit is:\n```\n" + code + "\n```"
+# Filtrelenmiş prompt
+filtered_code_lines = []
+for line in code.splitlines():
+    if line.startswith('+'):
+        filtered_code_lines.append(line)
+
+# Yalnızca `+` ile başlayan satırları kullan
+prompt = "\nCode of commit is:\n```\n" + "\n".join(filtered_code_lines) + "\n```"
 if len(prompt) > max_length:
     print(f"Prompt too long for OpenAI: {len(prompt)} characters, "
           f"sending only first {max_length} characters")
